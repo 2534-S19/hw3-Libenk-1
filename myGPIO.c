@@ -295,4 +295,9 @@ void turnOff_BoosterpackLEDWhite()
                             P2OUT &= ~BLED2_RED;
                              P2OUT &= ~BLED2_GREEN;
 }
-
+void turnOff_BoosterpackLED()
+{
+    P5OUT  &= ~BLED2_BLUE;
+                                P2OUT &= ~BLED2_RED;
+                                 P2OUT &= ~BLED2_GREEN;
+}

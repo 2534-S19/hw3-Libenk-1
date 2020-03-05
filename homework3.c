@@ -84,7 +84,6 @@ void changeLaunchpadLED2(unsigned int count)
                      break;
                  case 1:
                     turnOn_LaunchpadLED2Red();
-
                     break;
                  case 2:
                      turnOn_LaunchpadLED2Yellow();
@@ -120,17 +119,17 @@ void changeBoosterpackLED(unsigned int count)
 switch(count & 7)
 {
                     case 0:
-                        turnOn_BoosterpackLEDRed();
+                        turnOff_BoosterpackLED();
                         break;
                     case 1:
-                       turnOn_BoosterpackLEDYellow();
+                       turnOn_BoosterpackLEDRed();
 
                        break;
                     case 2:
-                        turnOn_BoosterpackLEDGreen();
+                        turnOn_BoosterpackLEDYellow();
                          break;
                     case 3:
-                        turnOn_BoosterpackLEDCyan();
+                        turnOn_BoosterpackLEDGreen();
 
                         break;
                     case 4:
