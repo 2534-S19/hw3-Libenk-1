@@ -8,10 +8,11 @@ int main(void)
     // Count variables to control the LEDs.
     unsigned int count0 = 0;
     unsigned int count1 = 0;
-  // typedef enum  buffer {0,1,10,100,1000,10000,100000,1000000,10000000} buffer;
-   unsigned char buttonhistory= 0;
 
-
+ // typedef enum   {U,D} buffer;
+  // static buffer  buttonhistory=U;
+   //unsigned int sample;
+ //   unsigned char buttonhistory=0;
     // TODO: Declare the variables that main uses to interact with your state machine.
     // Stops the Watchdog timer.
     initBoard();
@@ -46,15 +47,17 @@ int main(void)
         // TODO: If Timer1 has expired, update the button history from the pushbutton value.
         // YOU MUST WRITE timer1expired IN myTimer.c
             if(timer0Expired())
-            count1++;
+                sample++;
+
 
         // TODO: Call the button state machine function to check for a completed, debounced button press.
         // YOU MUST WRITE THIS FUNCTION BELOW.
-             fsmBoosterpackButtonS1(buttonhistory);
+             fsmBoosterpackButtonS1(button);
+
 
 
         // TODO: If a completed, debounced button press has occurred, increment count1.
-             if (fsmBoosterpackButtonS1(buttonhistory))
+             if (fsmBoosterpackButtonS1(button))
              count1++;
 
 
@@ -71,10 +74,13 @@ void initBoard()
 
 void changeLaunchpadLED2(unsigned int count)
 {
- switch(count & 7)
+
+
+
+ switch(sample & 7)
             {
                  case 0:
-                     turnOn_LaunchpadLED2Cyan();
+                     turnOff_LaunchpadLED2Cyan();
                      break;
                  case 1:
                     turnOn_LaunchpadLED2Red();
@@ -111,111 +117,63 @@ void changeLaunchpadLED2(unsigned int count)
 // This is essentially a copy of the previous function, using a different LED
 void changeBoosterpackLED(unsigned int count)
 {
-  /*  {
+switch(count & 7)
+{
                     case 0:
-                        turnOn_LaunchpadLED2Cyan();
+                        turnOn_BoosterpackLEDRed();
                         break;
                     case 1:
-                       turnOn_LaunchpadLED2Red();
+                       turnOn_BoosterpackLEDYellow();
 
                        break;
                     case 2:
-                        turnOn_LaunchpadLED2Yellow();
+                        turnOn_BoosterpackLEDGreen();
                          break;
                     case 3:
-                        turnOn_LaunchpadLED2Green();
+                        turnOn_BoosterpackLEDCyan();
 
                         break;
                     case 4:
-                        turnOn_BoosterpackLED2Cyan();
+                        turnOn_BoosterpackLEDBlue();
 
                         break;
                     case 5:
-                        turnOn_BoosterpackLED2Blue();
-
+                        turnOn_BoosterpackLEDMagneta();
                         break;
                     case 6:
-                        turnOn_BoosterpackLED2White();
-
+                        turnOn_BoosterpackLEDWhite();
                         break;
                     case 7:
-                        turnOn_Boosterpack();
+                        turnOn_BoosterpackLEDCyan();
                         break;
                     default:
                         break;
                }
-   */
+
 }
 
 // TODO: Create a button state machine.
 // The button state machine should return true or false to indicate a completed, debounced button press.
-bool fsmBoosterpackButtonS1(unsigned char buttonhistory)
+bool fsmBoosterpackButtonS1(unsigned char button)
 {
 
     bool pressed = false;
-    switch (buttonhistory)
+    switch (button)
     {
-        case 0:
-              if(buttonhistory==0)
+        case U:
+              if(checkStatus_BoosterpackS1()==PRESSED)
               {
-              buttonhistory=checkStatus_BoosterpackS1();
-              turnOff_BoosterpackLEDRed();
-              break;
+                  button=D;
+                  return true;
               }
-        case 1:
-           if(buttonhistory==1)
-           {
-               buttonhistory=checkStatus_BoosterpackS1() | (buttonhistory<<1);
-               turnOn_BoosterpackLEDRed();
-                return true;
-               }
-               break;
-        case 2:
-            if(buttonhistory==10)
-           {
-                buttonhistory=(checkStatus_BoosterpackS1() | (buttonhistory<<2));
-                turnOn_BoosterpackLEDYellow();
-           }
-             break;
-        case 3:
-                   if(buttonhistory==100)
-                  {
-                       buttonhistory=checkStatus_BoosterpackS1() | (buttonhistory<<2);
-                       turnOn_BoosterpackLEDYellow();
-                  }
-                    break;
-        case 4:
-                   if(buttonhistory==1000)
-                  {
-                       buttonhistory=checkStatus_BoosterpackS1() | (buttonhistory<<2);
-                       turnOn_BoosterpackLEDYellow();
-                  }
-                    break;
-        case 5:
-                   if(buttonhistory==10000)
-                  {
-                       buttonhistory=checkStatus_BoosterpackS1() | (buttonhistory<<2);
-                       turnOn_BoosterpackLEDYellow();
-                  }
-                    break;
-        case 6:
-                   if(buttonhistory==100000)
-                  {
-                       buttonhistory=checkStatus_BoosterpackS1() | (buttonhistory<<2);
-                       turnOn_BoosterpackLEDYellow();
-                  }
-                    break;
-        case 7:
-                   if(buttonhistory==10000000)
-                  {
-                       buttonhistory=checkStatus_BoosterpackS1() | (buttonhistory<<2);
-                       turnOn_BoosterpackLEDYellow();
-                  }
-                    break;
-
-        default:
               break;
- }
 
-    return pressed;
+        case D:
+            if(checkStatus_BoosterpackS1()==UNPRESSED)
+            {
+            button=U;
+            }
+          break;
+    }
+return pressed;
 }

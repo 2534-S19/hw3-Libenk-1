@@ -9,6 +9,8 @@
 
 #ifndef HOMEWORK3_H_
 #define HOMEWORK3_H_
+#define PRESSED    0
+#define UNPRESSED  1
 
 // This function initializes the board by turning off the Watchdog Timer.
 void initBoard();
@@ -21,6 +23,8 @@ bool fsmBoosterpackButtonS1(unsigned char buttonhistory);
 
 
 // TODO: Define any constants that are local to homework.c using #define
-
+ typedef enum   {U,D} buffer;
+ static buffer  button=U;
+ unsigned char sample=0;
 
 #endif /* HOMEWORK3_H_ */
