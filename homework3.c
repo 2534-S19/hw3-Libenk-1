@@ -8,10 +8,11 @@ int main(void)
     // Count variables to control the LEDs.
     unsigned int count0 = 0;
     unsigned int count1 = 0;
+  // typedef enum  buffer {0,1,10,100,1000,10000,100000,1000000,10000000} buffer;
+   unsigned char buttonhistory= 0;
+
 
     // TODO: Declare the variables that main uses to interact with your state machine.
-
-
     // Stops the Watchdog timer.
     initBoard();
     // Initialize the GPIO.
@@ -26,30 +27,35 @@ int main(void)
 
     while(1)
     {
+
         // Update the color of LED2 using count0 as the index.
         // YOU MUST WRITE THIS FUNCTION BELOW.
         changeLaunchpadLED2(count0);
+
+
         // Update the color of the Boosterpack LED using count1 as the index.
         // YOU MUST WRITE THIS FUNCTION BELOW.
         changeBoosterpackLED(count1);
 
+
         // TODO: If Timer0 has expired, increment count0.
         // YOU MUST WRITE timer0expired IN myTimer.c
-
-
+            if(timer0Expired())
+                    count0++;
 
         // TODO: If Timer1 has expired, update the button history from the pushbutton value.
         // YOU MUST WRITE timer1expired IN myTimer.c
-
-
+            if(timer0Expired())
+            count1++;
 
         // TODO: Call the button state machine function to check for a completed, debounced button press.
         // YOU MUST WRITE THIS FUNCTION BELOW.
-
+             fsmBoosterpackButtonS1(buttonhistory);
 
 
         // TODO: If a completed, debounced button press has occurred, increment count1.
-
+             if (fsmBoosterpackButtonS1(buttonhistory))
+             count1++;
 
 
     }
@@ -62,24 +68,154 @@ void initBoard()
 
 // TODO: Map the value of a count variable to a color for LED2.
 // Since count is an unsigned integer, you can mask the value in some way.
+
 void changeLaunchpadLED2(unsigned int count)
 {
+ switch(count & 7)
+            {
+                 case 0:
+                     turnOn_LaunchpadLED2Cyan();
+                     break;
+                 case 1:
+                    turnOn_LaunchpadLED2Red();
 
+                    break;
+                 case 2:
+                     turnOn_LaunchpadLED2Yellow();
+                      break;
+                 case 3:
+                     turnOn_LaunchpadLED2Green();
+
+                     break;
+                 case 4:
+                     turnOn_LaunchpadLED2Cyan();
+
+                     break;
+                 case 5:
+                     turnOn_LaunchpadLED2Blue();
+
+                     break;
+                 case 6:
+                     turnOn_LaunchpadLED2White();
+
+                     break;
+                 case 7:
+                     turnOn_LaunchpadLED2Magneta();
+                     break;
+                 default:
+                     break;
+            }
 }
 
 // TODO: Maybe the value of a count variable to a color for the Boosterpack LED
 // This is essentially a copy of the previous function, using a different LED
 void changeBoosterpackLED(unsigned int count)
 {
+  /*  {
+                    case 0:
+                        turnOn_LaunchpadLED2Cyan();
+                        break;
+                    case 1:
+                       turnOn_LaunchpadLED2Red();
 
+                       break;
+                    case 2:
+                        turnOn_LaunchpadLED2Yellow();
+                         break;
+                    case 3:
+                        turnOn_LaunchpadLED2Green();
+
+                        break;
+                    case 4:
+                        turnOn_BoosterpackLED2Cyan();
+
+                        break;
+                    case 5:
+                        turnOn_BoosterpackLED2Blue();
+
+                        break;
+                    case 6:
+                        turnOn_BoosterpackLED2White();
+
+                        break;
+                    case 7:
+                        turnOn_Boosterpack();
+                        break;
+                    default:
+                        break;
+               }
+   */
 }
 
 // TODO: Create a button state machine.
 // The button state machine should return true or false to indicate a completed, debounced button press.
-bool fsmBoosterpackButtonS1(unsigned int buttonhistory)
+bool fsmBoosterpackButtonS1(unsigned char buttonhistory)
 {
-    bool pressed = false;
 
+    bool pressed = false;
+    switch (buttonhistory)
+    {
+        case 0:
+              if(buttonhistory==0)
+              {
+              buttonhistory=checkStatus_BoosterpackS1();
+              turnOff_BoosterpackLEDRed();
+              break;
+              }
+        case 1:
+           if(buttonhistory==1)
+           {
+               buttonhistory=checkStatus_BoosterpackS1() | (buttonhistory<<1);
+               turnOn_BoosterpackLEDRed();
+                return true;
+               }
+               break;
+        case 2:
+            if(buttonhistory==10)
+           {
+                buttonhistory=(checkStatus_BoosterpackS1() | (buttonhistory<<2));
+                turnOn_BoosterpackLEDYellow();
+           }
+             break;
+        case 3:
+                   if(buttonhistory==100)
+                  {
+                       buttonhistory=checkStatus_BoosterpackS1() | (buttonhistory<<2);
+                       turnOn_BoosterpackLEDYellow();
+                  }
+                    break;
+        case 4:
+                   if(buttonhistory==1000)
+                  {
+                       buttonhistory=checkStatus_BoosterpackS1() | (buttonhistory<<2);
+                       turnOn_BoosterpackLEDYellow();
+                  }
+                    break;
+        case 5:
+                   if(buttonhistory==10000)
+                  {
+                       buttonhistory=checkStatus_BoosterpackS1() | (buttonhistory<<2);
+                       turnOn_BoosterpackLEDYellow();
+                  }
+                    break;
+        case 6:
+                   if(buttonhistory==100000)
+                  {
+                       buttonhistory=checkStatus_BoosterpackS1() | (buttonhistory<<2);
+                       turnOn_BoosterpackLEDYellow();
+                  }
+                    break;
+        case 7:
+                   if(buttonhistory==10000000)
+                  {
+                       buttonhistory=checkStatus_BoosterpackS1() | (buttonhistory<<2);
+                       turnOn_BoosterpackLEDYellow();
+                  }
+                    break;
+
+        default:
+              break;
+ }
 
     return pressed;
 }
