@@ -24,7 +24,7 @@ bool fsmBoosterpackButtonS1(unsigned char buttonhistory);
 
 // TODO: Define any constants that are local to homework.c using #define
  typedef enum   {U,D} buffer;
- static buffer  button=U;
+ static buffer button=U;
  unsigned char sample=0;
 
 #endif /* HOMEWORK3_H_ */

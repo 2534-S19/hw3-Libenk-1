@@ -51,6 +51,9 @@ void initGPIO()
                  P2OUT = P2OUT & ~LED2_GREEN;    /*  //GREEN COLOR      MAKES IT OUTPUT*/
                  P2OUT = P2OUT & ~LED2_BLUE;
 
+                 P2OUT = P2OUT & ~BLED2_RED ;     /*  // RED COLOR      MAKES IT OUTPUT*/
+                 P2OUT = P2OUT & ~BLED2_GREEN;    /*  //GREEN COLOR      MAKES IT OUTPUT*/
+                 P5OUT = P2OUT & ~BLED2_BLUE;
 }
 
 // TODO: Create a function to return the status of Launchpad Pushbutton S1
@@ -148,8 +151,6 @@ void turnOn_BoosterpackLEDRed()
 void turnOff_BoosterpackLEDRed()
 {
                     P2OUT &= ~BLED2_RED;
-                    P5OUT &= ~BLED2_BLUE;
-                                      P2OUT&= ~ BLED2_GREEN;
 }
 
 // TODO: Create a function to turn on the Green Boosterpack LED2.
@@ -241,22 +242,22 @@ void turnOff_LaunchpadLED2White()
 void turnOn_BoosterpackLEDCyan()
 {
 
-    P5OUT  |= BLED2_BLUE;
-  P2OUT &= ~BLED2_RED;
+   P5OUT  |= BLED2_BLUE;
+   P2OUT &= ~BLED2_RED;
    P2OUT |= BLED2_GREEN;
 }
 
 void turnOn_BoosterpackLEDMagneta()
 {
-    P2OUT  |= BLED2_RED;
-                           P5OUT |= BLED2_BLUE;
+                            P2OUT  |= BLED2_RED;
+                            P5OUT |= BLED2_BLUE;
                             P2OUT &= ~BLED2_GREEN;
 }
 
 void turnOn_BoosterpackLEDWhite()
 {
-    P2OUT  |= BLED2_RED;
-                              P5OUT |= BLED2_BLUE;
+                               P2OUT  |= BLED2_RED;
+                               P5OUT |= BLED2_BLUE;
                                P2OUT |= BLED2_GREEN;
 }
 void turnOn_BoosterpackLEDYellow()
@@ -269,7 +270,7 @@ void turnOn_BoosterpackLEDYellow()
 void turnOff_BoosterpackLEDYellow()
 {
 
-    P5OUT  &= ~BLED2_BLUE;
+                        P5OUT  &= ~BLED2_BLUE;
                             P2OUT &= ~BLED2_RED;
                              P2OUT &= ~BLED2_GREEN;
 }
@@ -297,7 +298,13 @@ void turnOff_BoosterpackLEDWhite()
 }
 void turnOff_BoosterpackLED()
 {
-    P5OUT  &= ~BLED2_BLUE;
+                                P5OUT  &= ~BLED2_BLUE;
                                 P2OUT &= ~BLED2_RED;
                                  P2OUT &= ~BLED2_GREEN;
+}
+void turnOff_LaunchpadLED2()
+{
+                                P2OUT  &= ~LED2_BLUE;
+                                P2OUT &= ~LED2_RED;
+                                 P2OUT &= ~LED2_GREEN;
 }

@@ -8,7 +8,7 @@ int main(void)
     // Count variables to control the LEDs.
     unsigned int count0 = 0;
     unsigned int count1 = 0;
-
+;
  // typedef enum   {U,D} buffer;
   // static buffer  buttonhistory=U;
    //unsigned int sample;
@@ -46,13 +46,13 @@ int main(void)
 
         // TODO: If Timer1 has expired, update the button history from the pushbutton value.
         // YOU MUST WRITE timer1expired IN myTimer.c
-            if(timer0Expired())
+            if(timer1Expired())
                 sample++;
 
 
         // TODO: Call the button state machine function to check for a completed, debounced button press.
         // YOU MUST WRITE THIS FUNCTION BELOW.
-             fsmBoosterpackButtonS1(button);
+             fsmBoosterpackButtonS1(count1);
 
 
 
@@ -74,13 +74,10 @@ void initBoard()
 
 void changeLaunchpadLED2(unsigned int count)
 {
-
-
-
- switch(sample & 7)
+ switch(count & 7)
             {
                  case 0:
-                     //turnOff_LaunchpadLED2Cyan();
+                     turnOff_LaunchpadLED2();
                      break;
                  case 1:
                     turnOn_LaunchpadLED2Red();
@@ -108,6 +105,7 @@ void changeLaunchpadLED2(unsigned int count)
                      turnOn_LaunchpadLED2Magneta();
                      break;
                  default:
+                     turnOff_LaunchpadLED2();
                      break;
             }
 }
@@ -116,38 +114,36 @@ void changeLaunchpadLED2(unsigned int count)
 // This is essentially a copy of the previous function, using a different LED
 void changeBoosterpackLED(unsigned int count)
 {
-switch(count & 7)
-{
+            switch(count & 7)
+                   {
                     case 0:
                        turnOff_BoosterpackLED();
                         break;
                     case 1:
                        turnOn_BoosterpackLEDRed();
-
                        break;
                     case 2:
                         turnOn_BoosterpackLEDYellow();
                          break;
                     case 3:
                         turnOn_BoosterpackLEDGreen();
-
                         break;
                     case 4:
-                        turnOn_BoosterpackLEDBlue();
-
-                        break;
-                    case 5:
-                        turnOn_BoosterpackLEDMagneta();
-                        break;
-                    case 6:
-                        turnOn_BoosterpackLEDWhite();
-                        break;
-                    case 7:
                         turnOn_BoosterpackLEDCyan();
                         break;
-                    default:
+                    case 5:
+                        turnOn_BoosterpackLEDBlue();
                         break;
-               }
+                    case 6:
+                        turnOn_BoosterpackLEDMagneta();
+                        break;
+                    case 7:
+                        turnOn_BoosterpackLEDWhite();
+                        break;
+                    default:
+                        turnOff_BoosterpackLED();
+                        break;
+                    }
 
 }
 
@@ -170,7 +166,7 @@ bool fsmBoosterpackButtonS1(unsigned char button)
         case D:
             if(checkStatus_BoosterpackS1()==UNPRESSED)
             {
-            button=U;
+                    button=U;
             }
           break;
     }

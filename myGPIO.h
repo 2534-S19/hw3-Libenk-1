@@ -56,17 +56,6 @@ void turnOff_LaunchpadLED2Yellow();
 void turnOff_LaunchpadLED2Cyan();
 void turnOff_LaunchpadLED2Magneta();
 void turnOff_LaunchpadLED2White();
-
-
-
-
-
-
-
-
-
-
-
 // This function turns on Boosterpack Red LED.
 void turnOn_BoosterpackLEDRed();
 // This function turns off Boosterpack Red LED.
@@ -79,9 +68,6 @@ void turnOff_BoosterpackLEDGreen();
 void turnOn_BoosterpackLEDBlue();
 // This function turns off Boosterpack Blue LED.
 void turnOff_BoosterpackLEDBlue();
-
-
-
 void turnOn_BoosterpackLEDCyan();
 void turnOn_BoosterpackLEDMagneta();
 void turnOn_BoosterpackLEDWhite();
@@ -91,6 +77,7 @@ void turnOff_BoosterpackLEDCyan();
 void turnOff_BoosterpackLEDMagneta();
 void turnOff_BoosterpackLEDWhite();
 void turnOff_BoosterpackLED();
+void turnOff_LaunchpadLED2();
 
 
 // TODO: Define any constants that are local to myGPIO.c using #define
